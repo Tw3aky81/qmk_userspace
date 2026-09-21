@@ -13,22 +13,10 @@ enum layers {
     _ADJUST,
 };
 
-// Tap Dance declarations
-enum {
-    TD_LSFT_CAPS,
-};
-
-/* Vial doesn't like me defining my own tapdance sequences in keymap.c
-// Tap Dance definitions
-tap_dance_action_t tap_dance_actions[] = {
-    // Tap once for Left Shift, twice for Caps Lock
-    [TD_LSFT_CAPS] = ACTION_TAP_DANCE_DOUBLE(KC_LSFT, KC_CAPS),
-};
-*/
 // Aliases for readability
 #define QWERTY   DF(_QWERTY)
 
-#define X4F      MO(_X4F)
+#define X4F      TG(_X4F)
 #define NAV      MO(_NAV)
 #define FKEYS    MO(_FUNCTION)
 #define ADJUST   MO(_ADJUST)
@@ -38,8 +26,6 @@ tap_dance_action_t tap_dance_actions[] = {
 #define CTL_QUOT MT(MOD_RCTL, KC_QUOTE)
 #define CTL_MINS MT(MOD_RCTL, KC_MINUS)
 #define ALT_ENT  MT(MOD_LALT, KC_ENT)
-
-#define TD_LSFT  TD(TD_LSFT_CAPS)
 
 // Note: LAlt/Enter (ALT_ENT) is not the same thing as the keyboard shortcut Alt+Enter.
 // The notation `mod/tap` denotes a key that activates the modifier `mod` when held down, and
@@ -75,7 +61,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_GRV  , KC_1 ,  KC_2   ,  KC_3  ,   KC_4 ,   KC_5 ,                                        KC_6 ,  KC_7 ,  KC_8 ,   KC_9 ,  KC_0 , KC_MINS,
      KC_TAB  , KC_Q ,  KC_W   ,  KC_E  ,   KC_R ,   KC_T ,                                        KC_Y,   KC_U ,  KC_I ,   KC_O ,  KC_P , KC_BSPC,
      CTL_EQL , KC_A ,  KC_S   ,  KC_D  ,   KC_F ,   KC_G ,                                        KC_H,   KC_J ,  KC_K ,   KC_L ,KC_SCLN,CTL_QUOT,
-     TD_LSFT , KC_Z ,  KC_X   ,  KC_C  ,   KC_V ,   KC_B , KC_LBRC, ADJUST,     FKEYS  , KC_RBRC, KC_N,   KC_M ,KC_COMM, KC_DOT ,KC_SLSH, KC_RSFT,
+     KC_LSFT , KC_Z ,  KC_X   ,  KC_C  ,   KC_V ,   KC_B , KC_LBRC, ADJUST,     FKEYS  , KC_RBRC, KC_N,   KC_M ,KC_COMM, KC_DOT ,KC_SLSH, KC_RSFT,
                                   NAV  ,    X4F , ALT_ENT, KC_SPC ,KC_LGUI,     KC_ESC , KC_SPC ,KC_PGDN, KC_PGUP, KC_BSLS,
      KC_MUTE, KC_NO,  KC_NO, KC_NO, KC_NO,                                                                KC_MUTE, KC_NO, KC_NO, KC_NO, KC_NO
     ),
@@ -185,9 +171,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
     [_X4F] = LAYOUT_elora_hlc(
       _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
-      KC_GRV ,   KC_1 ,   KC_2 ,   KC_3 ,   KC_4 ,   KC_5 ,                                       KC_6 ,   KC_7 ,   KC_8 ,   KC_9 ,   KC_0 , KC_EQL ,
-     KC_TILD , KC_EXLM,  KC_AT , KC_HASH,  KC_DLR, KC_PERC,                                     KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_PLUS,
-     KC_PIPE , KC_BSLS, KC_COLN, KC_SCLN, KC_MINS, KC_LBRC, KC_LCBR, _______, _______, KC_RCBR, KC_RBRC, KC_UNDS, KC_COMM,  KC_DOT, KC_SLSH, KC_QUES,
+      _______, KC_T ,    KC_Q ,  KC_W   ,  KC_E  ,   KC_R ,                                     _______, _______, _______, _______, _______, _______,
+      _______, KC_G ,    KC_A ,  KC_S   ,  KC_D  ,   KC_F ,                                     _______, _______, _______, _______, _______, _______,
+      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
      _______, _______,  _______, _______, _______,                                                       _______, _______, _______, _______, _______
     ),
@@ -277,4 +263,70 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //     ),
 //
 };
+
+#if defined(ENCODER_MAP_ENABLE)
+const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
+    [0] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU),  ENCODER_CCW_CW(KC_VOLD, KC_VOLU),  ENCODER_CCW_CW(KC_PGUP, KC_PGDN),  ENCODER_CCW_CW(KC_PGUP, KC_PGDN)  },
+    [1] = { ENCODER_CCW_CW(_______, _______),  ENCODER_CCW_CW(_______, _______),  ENCODER_CCW_CW(_______, _______),  ENCODER_CCW_CW(_______, _______)  },
+    [2] = { ENCODER_CCW_CW(_______, _______),  ENCODER_CCW_CW(_______, _______),  ENCODER_CCW_CW(_______, _______),  ENCODER_CCW_CW(_______, _______)  },
+    [3] = { ENCODER_CCW_CW(_______, _______),  ENCODER_CCW_CW(_______, _______),  ENCODER_CCW_CW(_______, _______),  ENCODER_CCW_CW(_______, _______)  },
+    [4] = { ENCODER_CCW_CW(_______, _______),  ENCODER_CCW_CW(_______, _______),  ENCODER_CCW_CW(_______, _______),  ENCODER_CCW_CW(_______, _______)  },
+    [5] = { ENCODER_CCW_CW(_______, _______),  ENCODER_CCW_CW(_______, _______),  ENCODER_CCW_CW(_______, _______),  ENCODER_CCW_CW(_______, _______)  },
+    [6] = { ENCODER_CCW_CW(_______, _______),  ENCODER_CCW_CW(_______, _______),  ENCODER_CCW_CW(_______, _______),  ENCODER_CCW_CW(_______, _______)  },
+};
+#endif
+
+#ifdef RGB_MATRIX_ENABLE
+layer_state_t layer_state_set_user(layer_state_t state) {
+    switch (get_highest_layer(state)) {
+        case _NAV:
+            rgb_matrix_mode_noeeprom(RGB_MATRIX_BREATHING);
+            rgb_matrix_sethsv_noeeprom(HSV_PURPLE);
+            break;
+        case _X4F:
+            rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
+            rgb_matrix_sethsv_noeeprom(HSV_AZURE);
+            break;
+        case _FUNCTION:
+            rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
+            rgb_matrix_sethsv_noeeprom(HSV_PURPLE);
+            break;
+        case _ADJUST:
+            rgb_matrix_mode_noeeprom(RGB_MATRIX_CYCLE_ALL);
+            break;
+        default:
+            rgb_matrix_reload_from_eeprom();
+            break;
+    }
+    return state;
+}
+
+bool rgb_matrix_indicators_user(void) {
+    uint8_t layer = get_highest_layer(layer_state);
+    switch (layer) {
+        case _NAV:
+            // Highlight Nav keys on the right side
+            for (int i = 62; i <= 67; i++) rgb_matrix_set_color(i, 255, 255, 0); // Yellow
+            for (int i = 56; i <= 61; i++) rgb_matrix_set_color(i, 255, 255, 0);
+            for (int i = 50; i <= 55; i++) rgb_matrix_set_color(i, 255, 255, 0);
+            break;
+        case _X4F:
+            // Highlight Symbols on the left side
+            for (int i = 31; i <= 36; i++) rgb_matrix_set_color(i, 0, 255, 255); // Cyan
+            for (int i = 25; i <= 30; i++) rgb_matrix_set_color(i, 0, 255, 255);
+            for (int i = 19; i <= 24; i++) rgb_matrix_set_color(i, 0, 255, 255);
+            for (int i = 11; i <= 18; i++) rgb_matrix_set_color(i, 0, 255, 255);
+            break;
+        case _FUNCTION:
+            // Highlight F-keys on the left side
+            if (is_keyboard_left()) {
+                for (int i = 14; i <= 17; i++) rgb_matrix_set_color(i, 128, 255, 0); // F1 - F4
+                for (int i = 20; i <= 23; i++) rgb_matrix_set_color(i, 128, 255, 0); // F5 - F8
+                for (int i = 26; i <= 29; i++) rgb_matrix_set_color(i, 128, 255, 0); // F9 - F12
+            }
+            break;
+    }
+    return true;
+}
+#endif
 
